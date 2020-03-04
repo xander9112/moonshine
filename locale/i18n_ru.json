@@ -1,0 +1,12 @@
+{
+  "appTitle": "Moonshine Calculator",
+
+  "validationErrors": {
+    "specificSymbols": "Введены недопустимые символы",
+    "required": "Поле не заполнено",
+    "minLength": "минимальная длина: _minLength",
+    "phoneNumber": "Не правильно указан телефон",
+    "email": "Не правильно указан email",
+    "isAfter": "Дата конца не может быть раньше чем другая дата"
+  }
+}

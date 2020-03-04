@@ -1,6 +1,5 @@
 import 'package:calc/core/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'screens/index.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -13,8 +12,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int selectedIndex = 0;
   final widgetOptions = [
-    AbsoluteAlcoholContent(),
     CorrectionByTemperature(),
+    AbsoluteAlcoholContent(),
     DilutionAlcohol(),
     VolumeShugar(),
   ];
