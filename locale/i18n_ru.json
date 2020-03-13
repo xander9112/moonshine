@@ -1,10 +1,47 @@
 {
   "appTitle": "Moonshine Calculator",
 
+  "correctionByTemperature": {
+    "title": "Коррекция по температуре",
+    "fields": {
+      "temperature": "Температура раствора",
+      "spirituality": "Спиртуозность (%)"
+    },
+    "result": "Реальная крепость"
+  },
+
+  "absoluteAlcoholContent": {
+    "title": "Содержание абсолютного спирта",
+    "fields": {
+      "temperature": "Температура раствора",
+      "spirituality": "Спиртуозность (%)",
+      "capacity": "Объем (мл)"
+    },
+    "result": "Содержание АС"
+  },
+
+  "dilutionAlcohol": {
+    "title": "Содержание абсолютного спирта",
+    "fields": {
+      "temperature": "Температура раствора",
+      "spiritualityStart": "Изначальная крепость (%)",
+      "spiritualityFinish": "Необходимая крепость (%)",
+      "capacity": "Объем (мл)"
+    },
+    "result": "воды необходимо добавить"
+  },
+
+  "common": {
+    "submit": "Посчитать",
+    "ml": "мл"
+  },
+
   "validationErrors": {
     "specificSymbols": "Введены недопустимые символы",
     "required": "Поле не заполнено",
     "minLength": "минимальная длина: _minLength",
+    "min": "минимальное значение: _min",
+    "max": "Максимальное значение: _max",
     "phoneNumber": "Не правильно указан телефон",
     "email": "Не правильно указан email",
     "isAfter": "Дата конца не может быть раньше чем другая дата"

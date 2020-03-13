@@ -26,6 +26,16 @@ class Validators {
               options: {'minLength': minLength})
           : null;
 
+  static Function min(int min) => (var value) => int.parse(value) < min
+      ? _translationService
+          .text('validationErrors.min', options: {'min': min.toString()})
+      : null;
+
+  static Function max(int max) => (var value) => int.parse(value) > max
+      ? _translationService
+          .text('validationErrors.max', options: {'max': max.toString()})
+      : null;
+
   static String phoneNumber(String value) {
     if (value != null && value.length > 0 && value.length < 18) {
       return _translationService.text('validationErrors.phoneNumber');

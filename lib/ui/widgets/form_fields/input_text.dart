@@ -15,6 +15,7 @@ class InputText extends StatefulWidget {
   final Widget icon;
   final Function onIconTap;
   final Function(String value) onSaved;
+  final Function(String value) onChanged;
   final String Function(String) validator;
 
   InputText({
@@ -28,6 +29,7 @@ class InputText extends StatefulWidget {
     this.maxLines = 1,
     this.minLines = 1,
     this.onSaved,
+    this.onChanged,
     this.icon,
     this.onIconTap,
     this.validator,
@@ -54,6 +56,10 @@ class _InputTextState extends State<InputText> {
 
         return '';
       }
+
+      setState(() {
+        error = '';
+      });
     }
 
     return null;
@@ -73,6 +79,7 @@ class _InputTextState extends State<InputText> {
             readOnly: widget.readOnly,
             initialValue: widget.initValue,
             enabled: widget.enabled,
+            onChanged: widget.onChanged,
             style: TextStyle(fontSize: 14),
             onSaved: widget.onSaved,
             decoration: new InputDecoration(
