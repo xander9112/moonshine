@@ -50,7 +50,7 @@ flutter:
     - assets/bottom_navigation/absolute_alcohol_content.svg
     - assets/bottom_navigation/correction_by_temperature.svg
     - assets/bottom_navigation/dilution_alcohol.svg
-    - assets/bottom_navigation/volume_shugar.svg
+    - assets/bottom_navigation/volume_sugar.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

@@ -7,12 +7,13 @@ class InputWrap extends StatelessWidget {
   final Widget child;
   final double marginBottom;
 
-  InputWrap(
-      {this.child,
-      this.required = false,
-      this.showBorder = true,
-      this.labelText,
-      this.marginBottom});
+  InputWrap({
+    this.child,
+    this.required = false,
+    this.showBorder = true,
+    this.labelText,
+    this.marginBottom,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,6 @@ class InputWrap extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-            top: BorderSide(color: Colors.black.withOpacity(0.54), width: 1.0),
             bottom:
                 BorderSide(color: Colors.black.withOpacity(0.54), width: 1.0),
           ),

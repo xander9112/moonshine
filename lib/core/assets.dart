@@ -6,5 +6,5 @@ class Assets {
   static final String dilutionAlcohol =
       'assets/bottom_navigation/dilution_alcohol.svg';
   static final String volumeShugar =
-      'assets/bottom_navigation/volume_shugar.svg';
+      'assets/bottom_navigation/volume_sugar.svg';
 }

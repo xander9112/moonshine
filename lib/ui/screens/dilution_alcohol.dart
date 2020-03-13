@@ -38,6 +38,8 @@ class _DilutionAlcoholState extends State<DilutionAlcohol> {
                 int.parse(_formFields['spiritualityFinish']))
             .toString();
       });
+
+      FocusScope.of(context).requestFocus(new FocusNode());
     }
   }
 

@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
     CorrectionByTemperature(),
     AbsoluteAlcoholContent(),
     DilutionAlcohol(),
-    VolumeShugar(),
+    VolumeSugar(),
   ];
 
   @override

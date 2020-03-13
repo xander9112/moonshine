@@ -35,6 +35,8 @@ class _AbsoluteAlcoholContentState extends State<AbsoluteAlcoholContent> {
                 int.parse(_formFields['capacity']), spirituality.round())
             .toString();
       });
+
+      FocusScope.of(context).requestFocus(new FocusNode());
     }
   }
 

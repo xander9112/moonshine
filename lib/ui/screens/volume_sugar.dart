@@ -4,30 +4,32 @@ import 'package:calc/core/validators.dart';
 import 'package:calc/ui/widgets/form_fields/index.dart';
 import 'package:flutter/material.dart';
 
-class CorrectionByTemperature extends StatefulWidget {
+class VolumeSugar extends StatefulWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  _CorrectionByTemperatureState createState() =>
-      _CorrectionByTemperatureState();
+  _VolumeSugarState createState() => _VolumeSugarState();
 }
 
-class _CorrectionByTemperatureState extends State<CorrectionByTemperature> {
+class _VolumeSugarState extends State<VolumeSugar> {
   TranslationService _translationService = TranslationService();
 
   Map<String, dynamic> _formFields = {
-    "temperature": "20",
-    "spirituality": "",
+    "amount": "",
+    "capacity": "",
   };
+
   String result = '';
+
   Future<void> _onSubmit() async {
-    if (CorrectionByTemperature._formKey.currentState.validate()) {
-      CorrectionByTemperature._formKey.currentState.save();
+    if (VolumeSugar._formKey.currentState.validate()) {
+      VolumeSugar._formKey.currentState.save();
 
       setState(() {
-        result = temperatureCorrection(int.parse(_formFields['spirituality']),
-                int.parse(_formFields['temperature']))
-            .toString();
+        result = volumeSugar(
+          int.parse(_formFields['amount']),
+          int.parse(_formFields['capacity']),
+        ).round().toString();
       });
 
       FocusScope.of(context).requestFocus(new FocusNode());
@@ -44,39 +46,37 @@ class _CorrectionByTemperatureState extends State<CorrectionByTemperature> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_translationService.text('correctionByTemperature.title')),
+        title: Text(_translationService.text('volumeSugar.title')),
       ),
       body: Form(
-        key: CorrectionByTemperature._formKey,
+        key: VolumeSugar._formKey,
         child: ListView(
           children: <Widget>[
             InputRow(
               children: <Widget>[
                 InputText(
-                  marginBottom: 0,
                   keyboardType: TextInputType.number,
-                  initValue: _formFields['temperature'],
+                  initValue: _formFields['amount'],
                   validator: Validators.validate([
                     Validators.required,
                     Validators.min(0),
                     Validators.max(100)
                   ]),
-                  labelText: _translationService
-                      .text('correctionByTemperature.fields.temperature'),
-                  onSaved: _onSave('temperature'),
+                  labelText:
+                      _translationService.text('volumeSugar.fields.amount'),
+                  onSaved: _onSave('amount'),
                 ),
               ],
             ),
             InputRow(
               children: <Widget>[
                 InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['spirituality'],
+                  initValue: _formFields['capacity'],
                   keyboardType: TextInputType.number,
                   validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('correctionByTemperature.fields.spirituality'),
-                  onSaved: _onSave('spirituality'),
+                  labelText:
+                      _translationService.text('volumeSugar.fields.capacity'),
+                  onSaved: _onSave('capacity'),
                 ),
               ],
             ),
@@ -101,7 +101,7 @@ class _CorrectionByTemperatureState extends State<CorrectionByTemperature> {
         Padding(
           padding: EdgeInsets.only(top: 20),
           child: Text(
-            _translationService.text('correctionByTemperature.result'),
+            '$result ${_translationService.text('common.ml')}',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24),
           ),
@@ -109,7 +109,7 @@ class _CorrectionByTemperatureState extends State<CorrectionByTemperature> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 20),
           child: Text(
-            '$result %',
+            _translationService.text('volumeSugar.result'),
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24),
           ),
