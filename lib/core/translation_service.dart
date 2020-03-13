@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const String _storageKey = "CrmNeolfex_";
+const String _storageKey = "MoonCalc_";
 const List<List<String>> _supportedLanguages = [
   ['en', 'US'],
   ['ru', 'RU']

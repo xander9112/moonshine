@@ -6,15 +6,27 @@ import 'package:flutter/material.dart';
 
 class VolumeSugar extends StatefulWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final String title = 'volumeSugar.title';
 
   @override
   _VolumeSugarState createState() => _VolumeSugarState();
 }
 
 class _VolumeSugarState extends State<VolumeSugar> {
-  TranslationService _translationService = TranslationService();
+  final TranslationService _translationService = TranslationService();
 
-  Map<String, dynamic> _formFields = {
+  final List<Map<String, dynamic>> _formFieldsMap = [
+    {
+      'name': 'amount',
+      'validator': Validators.validate([Validators.required]),
+    },
+    {
+      'name': 'capacity',
+      'validator': Validators.validate([Validators.required]),
+    }
+  ];
+
+  final Map<String, dynamic> _formFields = {
     "amount": "",
     "capacity": "",
   };
@@ -45,46 +57,39 @@ class _VolumeSugarState extends State<VolumeSugar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_translationService.text('volumeSugar.title')),
-      ),
       body: Form(
         key: VolumeSugar._formKey,
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  keyboardType: TextInputType.number,
-                  initValue: _formFields['amount'],
-                  validator: Validators.validate([
-                    Validators.required,
-                    Validators.min(0),
-                    Validators.max(100)
-                  ]),
-                  labelText:
-                      _translationService.text('volumeSugar.fields.amount'),
-                  onSaved: _onSave('amount'),
-                ),
-              ],
+            ..._formFieldsMap
+                .map(
+                  (field) => InputRow(
+                    children: <Widget>[
+                      InputText(
+                        marginBottom: 0,
+                        keyboardType: TextInputType.number,
+                        initValue: _formFields[field['name']],
+                        validator: field['validator'],
+                        labelText: _translationService
+                            .text('volumeSugar.fields.${field['name']}'),
+                        hintText: _translationService
+                            .text('volumeSugar.fields.${field['name']}'),
+                        onSaved: _onSave(field['name']),
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+            Expanded(
+              child: _result(),
             ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  initValue: _formFields['capacity'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText:
-                      _translationService.text('volumeSugar.fields.capacity'),
-                  onSaved: _onSave('capacity'),
-                ),
-              ],
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                onPressed: _onSubmit,
+                child: Text(_translationService.text('common.submit')),
+              ),
             ),
-            RaisedButton(
-              onPressed: _onSubmit,
-              child: Text(_translationService.text('common.submit')),
-            ),
-            _result(),
           ],
         ),
       ),

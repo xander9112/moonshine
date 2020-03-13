@@ -6,15 +6,32 @@ import 'package:flutter/material.dart';
 
 class AbsoluteAlcoholContent extends StatefulWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final String title = 'absoluteAlcoholContent.title';
 
   @override
   _AbsoluteAlcoholContentState createState() => _AbsoluteAlcoholContentState();
 }
 
 class _AbsoluteAlcoholContentState extends State<AbsoluteAlcoholContent> {
-  TranslationService _translationService = TranslationService();
+  final TranslationService _translationService = TranslationService();
 
-  Map<String, dynamic> _formFields = {
+  final List<Map<String, dynamic>> _formFieldsMap = [
+    {
+      'name': 'temperature',
+      'validator': Validators.validate(
+          [Validators.required, Validators.min(0), Validators.max(100)]),
+    },
+    {
+      'name': 'spirituality',
+      'validator': Validators.validate([Validators.required]),
+    },
+    {
+      'name': 'capacity',
+      'validator': Validators.validate([Validators.required]),
+    }
+  ];
+
+  final Map<String, dynamic> _formFields = {
     "temperature": "20",
     "spirituality": "",
     "capacity": "",
@@ -49,61 +66,39 @@ class _AbsoluteAlcoholContentState extends State<AbsoluteAlcoholContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_translationService.text('absoluteAlcoholContent.title')),
-      ),
       body: Form(
         key: AbsoluteAlcoholContent._formKey,
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  keyboardType: TextInputType.number,
-                  initValue: _formFields['temperature'],
-                  validator: Validators.validate([
-                    Validators.required,
-                    Validators.min(0),
-                    Validators.max(100)
-                  ]),
-                  labelText: _translationService
-                      .text('absoluteAlcoholContent.fields.temperature'),
-                  onSaved: _onSave('temperature'),
-                ),
-              ],
+            ..._formFieldsMap
+                .map(
+                  (field) => InputRow(
+                    children: <Widget>[
+                      InputText(
+                        marginBottom: 0,
+                        keyboardType: TextInputType.number,
+                        initValue: _formFields[field['name']],
+                        validator: field['validator'],
+                        labelText: _translationService.text(
+                            'absoluteAlcoholContent.fields.${field['name']}'),
+                        hintText: _translationService.text(
+                            'correctionByTemperature.fields.${field['name']}'),
+                        onSaved: _onSave(field['name']),
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+            Expanded(
+              child: _result(),
             ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['spirituality'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('absoluteAlcoholContent.fields.spirituality'),
-                  onSaved: _onSave('spirituality'),
-                ),
-              ],
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                onPressed: _onSubmit,
+                child: Text(_translationService.text('common.submit')),
+              ),
             ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['capacity'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('absoluteAlcoholContent.fields.capacity'),
-                  onSaved: _onSave('capacity'),
-                ),
-              ],
-            ),
-            RaisedButton(
-              onPressed: _onSubmit,
-              child: Text(_translationService.text('common.submit')),
-            ),
-            _result(),
           ],
         ),
       ),

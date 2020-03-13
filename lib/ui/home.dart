@@ -1,6 +1,7 @@
 import 'package:calc/core/assets.dart';
 import 'package:flutter/material.dart';
 
+import '../core/translation_service.dart';
 import 'screens/index.dart';
 import 'widgets/bottom_nav_bar.dart';
 
@@ -10,7 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int selectedIndex = 0;
+  final TranslationService _translationService = TranslationService();
+
   final widgetOptions = [
     CorrectionByTemperature(),
     AbsoluteAlcoholContent(),
@@ -18,9 +20,32 @@ class _HomeState extends State<Home> {
     VolumeSugar(),
   ];
 
+  final widgetOptionsTitle = [
+    CorrectionByTemperature.title,
+    AbsoluteAlcoholContent.title,
+    DilutionAlcohol.title,
+    VolumeSugar.title,
+  ];
+
+  int selectedIndex = 0;
+
+  void _openSettings() {
+    print('_openSettings');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_translationService
+            .text(widgetOptionsTitle.elementAt(selectedIndex))),
+        actions: <Widget>[
+          IconButton(
+            onPressed: _openSettings,
+            icon: Icon(Icons.settings),
+          )
+        ],
+      ),
       body: Center(
         child: widgetOptions.elementAt(selectedIndex),
       ),

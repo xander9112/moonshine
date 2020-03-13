@@ -21,7 +21,7 @@
   },
 
   "dilutionAlcohol": {
-    "title": "Содержание абсолютного спирта",
+    "title": "Разбавление спирта",
     "fields": {
       "temperature": "Температура раствора",
       "spiritualityStart": "Изначальная крепость (%)",

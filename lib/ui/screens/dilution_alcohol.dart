@@ -6,15 +6,35 @@ import 'package:flutter/material.dart';
 
 class DilutionAlcohol extends StatefulWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final String title = 'dilutionAlcohol.title';
 
   @override
   _DilutionAlcoholState createState() => _DilutionAlcoholState();
 }
 
 class _DilutionAlcoholState extends State<DilutionAlcohol> {
-  TranslationService _translationService = TranslationService();
+  final TranslationService _translationService = TranslationService();
+  final List<Map<String, dynamic>> _formFieldsMap = [
+    {
+      'name': 'temperature',
+      'validator': Validators.validate(
+          [Validators.required, Validators.min(0), Validators.max(100)]),
+    },
+    {
+      'name': 'spiritualityStart',
+      'validator': Validators.validate([Validators.required]),
+    },
+    {
+      'name': 'spiritualityFinish',
+      'validator': Validators.validate([Validators.required]),
+    },
+    {
+      'name': 'capacity',
+      'validator': Validators.validate([Validators.required]),
+    }
+  ];
 
-  Map<String, dynamic> _formFields = {
+  final Map<String, dynamic> _formFields = {
     "temperature": "20",
     "spiritualityStart": "",
     "spiritualityFinish": "",
@@ -52,74 +72,39 @@ class _DilutionAlcoholState extends State<DilutionAlcohol> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_translationService.text('dilutionAlcohol.title')),
-      ),
       body: Form(
         key: DilutionAlcohol._formKey,
-        child: ListView(
+        child: Column(
           children: <Widget>[
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  keyboardType: TextInputType.number,
-                  initValue: _formFields['temperature'],
-                  validator: Validators.validate([
-                    Validators.required,
-                    Validators.min(0),
-                    Validators.max(100)
-                  ]),
-                  labelText: _translationService
-                      .text('dilutionAlcohol.fields.temperature'),
-                  onSaved: _onSave('temperature'),
-                ),
-              ],
+            ..._formFieldsMap
+                .map(
+                  (field) => InputRow(
+                    children: <Widget>[
+                      InputText(
+                        marginBottom: 0,
+                        keyboardType: TextInputType.number,
+                        initValue: _formFields[field['name']],
+                        validator: field['validator'],
+                        labelText: _translationService
+                            .text('dilutionAlcohol.fields.${field['name']}'),
+                        hintText: _translationService
+                            .text('dilutionAlcohol.fields.${field['name']}'),
+                        onSaved: _onSave(field['name']),
+                      ),
+                    ],
+                  ),
+                )
+                .toList(),
+            Expanded(
+              child: _result(),
             ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['spiritualityStart'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('dilutionAlcohol.fields.spiritualityStart'),
-                  onSaved: _onSave('spiritualityStart'),
-                ),
-              ],
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                onPressed: _onSubmit,
+                child: Text(_translationService.text('common.submit')),
+              ),
             ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['spiritualityFinish'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('dilutionAlcohol.fields.spiritualityFinish'),
-                  onSaved: _onSave('spiritualityFinish'),
-                ),
-              ],
-            ),
-            InputRow(
-              children: <Widget>[
-                InputText(
-                  marginBottom: 0,
-                  initValue: _formFields['capacity'],
-                  keyboardType: TextInputType.number,
-                  validator: Validators.validate([Validators.required]),
-                  labelText: _translationService
-                      .text('dilutionAlcohol.fields.capacity'),
-                  onSaved: _onSave('capacity'),
-                ),
-              ],
-            ),
-            RaisedButton(
-              onPressed: _onSubmit,
-              child: Text(_translationService.text('common.submit')),
-            ),
-            _result(),
           ],
         ),
       ),
